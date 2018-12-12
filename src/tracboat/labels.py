@@ -75,6 +75,7 @@ class LabelStatus(LabelAbstract):
         'accepted': 'opened',
         'reopened': 'opened',
         'closed': 'closed',
+        'resolved': 'closed',
     }
 
 class LabelSet():

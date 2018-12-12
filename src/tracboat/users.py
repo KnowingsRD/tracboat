@@ -38,7 +38,8 @@ class UserManager():
 
         for login in users:
             email = self.usermap.get(login, self.fallback_user)
-            self.create_user(email)
+# Disable user creation due to some crash cause by model compatibility (Gitlab v11.5.x used)
+#            self.create_user(email)
             user = self.gitlab.get_user(email)
             self.logger.info("Load %s as %s: %r" % (login, email, user))
             self.users[login] = user
@@ -58,7 +59,7 @@ class UserManager():
             'two_factor_enabled' : False,
         }
 
-        attrs.update(userattrs.get(email, {}))
+        attrs.update(self.userattrs.get(email, {}))
         self.gitlab.create_user(**attrs)
         self.logger.info('Created GitLab user %r', email)
         self.logger.debug('Created GitLab user %r with attributes: %r', email, attrs)
